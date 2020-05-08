@@ -6,7 +6,6 @@ N_CLASSES = 10
 
 
 def one_hot(Y, n_classes):
-    print(Y.shape)
     one_hot_y = np.zeros((Y.shape[1], n_classes))
     rows = np.arange(Y.shape[1])
     one_hot_y[rows, Y] = 1
@@ -34,8 +33,8 @@ def shuffle_data(features, labels, random_seed=42):
 
 def split_test(X_train, y_train):
     X, y = shuffle_data(X_train, y_train, random_seed=42)
-    train_set_x, train_set_y = X[:35000], y[:35000]
-    test_set_x, test_set_y = X[35000:], y[35000:]
+    train_set_x, train_set_y = X[:34000], y[:34000]
+    test_set_x, test_set_y = X[34000:], y[34000:]
 
     test_set_x = test_set_x.reshape(test_set_x.shape[0], -1).T
     train_set_x = train_set_x.reshape(train_set_x.shape[0], -1).T
@@ -89,6 +88,13 @@ def relu_gradient(dA, Z):
 
 def accuracy(pred, labels):
     return (np.sum(pred == labels, axis=1) / float(labels.shape[1]))[0]
+
+
+def write_data(result):
+    df = pd.DataFrame({'ImageId': np.arange(1, len(result) + 1),
+                       'Label': result})
+
+    df.to_csv('submission.csv', encoding='utf-8', index=False)
 
 
 
